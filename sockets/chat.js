@@ -1,5 +1,3 @@
-const { on } = require("nodemon")
-
 module.exports = (io, socket, onlineUsers) => {
   // Listen for "new user" socket emits
 
@@ -22,7 +20,12 @@ module.exports = (io, socket, onlineUsers) => {
   })
 
   socket.on("disconnect", () => {
+    //This deletes the user by using the username we saved to the socket
     delete onlineUsers[socket.username]
     io.emit("user has left", onlineUsers)
+  })
+
+  socket.on("new channel", (newChannel) => {
+    console.log(newChannel)
   })
 }
