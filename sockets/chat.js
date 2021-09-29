@@ -21,6 +21,11 @@ module.exports = (io, socket, onlineUsers, channels) => {
     socket.emit("get online users", onlineUsers)
   })
 
+  socket.on("get channels", () => {
+    //Send over the onlineUsers
+    socket.emit("get channels", channels)
+  })
+
   socket.on("disconnect", () => {
     //This deletes the user by using the username we saved to the socket
     delete onlineUsers[socket.username]

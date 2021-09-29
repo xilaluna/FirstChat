@@ -4,6 +4,7 @@ $(document).ready(() => {
   let currentUser
 
   socket.emit("get online users")
+  socket.emit("get channels")
 
   socket.emit("user changed channel", "General")
 
@@ -75,6 +76,14 @@ $(document).ready(() => {
   socket.on("get online users", (onlineUsers) => {
     for (username in onlineUsers) {
       $(".users-online").append(`<div class="user-online">${username}</div>`)
+    }
+  })
+
+  socket.on("get channels", (onlineUsers) => {
+    //You may have not have seen this for loop before. It's syntax is for(key in obj)
+    //Our usernames are keys in the object of onlineUsers.
+    for (channel in channels) {
+      $(".channels").append(`<div class="channel">${channel}</div>`)
     }
   })
 
