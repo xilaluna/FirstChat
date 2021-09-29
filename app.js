@@ -6,6 +6,7 @@ const server = require("http").Server(app)
 //Socket.io
 const io = require("socket.io")(server)
 io.on("connection", (socket) => {
+  require("./sockets/chat.js")(io, socket)
   console.log("🔌 New user connected! 🔌")
 })
 
