@@ -3,6 +3,8 @@ $(document).ready(() => {
 
   let currentUser
 
+  socket.emit("get online users")
+
   $("#create-user-btn").click((e) => {
     e.preventDefault()
     if ($("#username-input").val().length > 0) {
@@ -31,17 +33,21 @@ $(document).ready(() => {
 
   //socket listeners
   socket.on("new user", (username) => {
-    console.log(`${username} has joined the chat`)
     // Add the new user to the online users div
     $(".users-online").append(`<div class="user-online">${username}</div>`)
   })
 
   socket.on("new message", (data) => {
-    console.log(`📥 ${data.sender}: ${data.message}`)
     $(".message-container").append(`
     <div class="message">
       <p class="message-user">${data.sender}: </p>
       <p class="message-text">${data.message}</p>
     </div>`)
+  })
+
+  socket.on("get online users", (onlineUsers) => {
+    for (username in onlineUsers) {
+      $(".users-online").append(`<div class="user-online">${username}</div>`)
+    }
   })
 })
