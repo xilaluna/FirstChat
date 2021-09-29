@@ -1,17 +1,25 @@
+//app.js
 const express = require("express")
 const app = express()
-
 const server = require("http").Server(app)
 
-const exphbs = require("express-handlebars")
+//Socket.io
+const io = require("socket.io")(server)
+io.on("connection", (socket) => {
+  console.log("🔌 New user connected! 🔌")
+})
 
+//handlebars
+const exphbs = require("express-handlebars")
 app.engine("handlebars", exphbs())
 app.set("view engine", "handlebars")
 
+app.use("/public", express.static("public"))
+
 app.get("/", (req, res) => {
-  res.render("index.handlebars")
+  res.render("index")
 })
 
 server.listen("3000", () => {
-  console.log("Active on Port 3000")
+  console.log("Server listening on Port 3000")
 })
